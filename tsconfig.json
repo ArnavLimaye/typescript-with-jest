@@ -8,6 +8,6 @@
     "outFile": "./built/local/tsc.js",
     "sourceMap": true
   },
-  "include": ["src"],
+  "include": ["src", "src/cart/Cart.ts"],
   "exclude": ["./node_modules", "**/*.spec.ts"]
 }
