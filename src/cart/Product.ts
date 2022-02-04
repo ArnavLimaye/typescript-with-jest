@@ -5,9 +5,8 @@ class Product {
   private unitPrice: number;
   private quantity: 0;
 
-  constructor(name: string, unitPrice: number);
-  constructor(name: string, unitPrice: number, quantity: number);
-  constructor(name: string, unitPrice: number, quantity?: number) {
+  
+  constructor(name: string, unitPrice: number, quantity: number) {
       this.name = name;
       this.unitPrice = unitPrice;
       this.quantity += quantity;

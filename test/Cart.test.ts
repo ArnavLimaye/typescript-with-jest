@@ -14,12 +14,15 @@ describe("Shopping Cart Story 1", () => {
         const cart = new Cart();
         const name = "Dove";
         const unitPrice = 39.99;
-        const soapProduct = new Product(name, unitPrice);
-
         const quantity = 5;
+        const soapProduct = new Product(name, unitPrice, quantity);
+
         cart.addProduct(soapProduct, quantity);
 
-        expect(cart).toEqual({name, unitPrice, quantity});
+        const EXPECTED_CART_SET = new Set<Product>();
+        EXPECTED_CART_SET.add(soapProduct);
+
+        expect(cart.getCartItems()).toEqual(EXPECTED_CART_SET);
         
     })
 
@@ -27,8 +30,9 @@ describe("Shopping Cart Story 1", () => {
         const cart = new Cart();
         const soapName = "Dove";
         const soapUnitPrice = 39.99;
-        const soapProduct = new Product(soapName, soapUnitPrice);
         const soapQuantity = 5;
+        const soapProduct = new Product(soapName, soapUnitPrice, soapQuantity);
+        
         
 
         cart.addProduct(soapProduct, soapQuantity);
@@ -47,8 +51,9 @@ describe("Shopping Cart Story 2", () => {
         const cart = new Cart();
         const soapName = "Dove";
         const soapUnitPrice = 39.99;
-        const soapProduct = new Product(soapName, soapUnitPrice);
         const soapQuantity = 5;
+        const soapProduct = new Product(soapName, soapUnitPrice, soapQuantity);
+        
         
 
         cart.addProduct(soapProduct, soapQuantity);
@@ -65,8 +70,8 @@ describe("Shopping Cart Story 2", () => {
         const cart = new Cart();
         const soapName = "Dove";
         const soapUnitPrice = 39.99;
-        const soapProduct = new Product(soapName, soapUnitPrice);
         const soapQuantity = 5;
+        const soapProduct = new Product(soapName, soapUnitPrice,soapQuantity);
         
         cart.addProduct(soapProduct, soapQuantity);
         const additionalSoapQuantity = 3;
@@ -76,7 +81,7 @@ describe("Shopping Cart Story 2", () => {
 
         expect(actualTotalCartPrice).toEqual(EXPECTED_TOTAL_CART_PRICE);
     })
-    
+
 })
 
 describe("Shopping Cart Story 3", () => {
@@ -88,20 +93,19 @@ describe("Shopping Cart Story 3", () => {
         const soapUnitPrice = 39.99;
         const soapQuantity = 2;
         const soapProduct = new Product(soapName, soapUnitPrice, soapQuantity);
-        cart.addProduct(soapProduct);
+        cart.addProduct(soapProduct, soapQuantity);
 
         const deoName = "Axe";
         const deoUnitPrice = 99.999;
         const deoQuantity = 2;
         const deoProduct = new Product(deoName, deoUnitPrice, deoQuantity);
-        cart.addProduct(deoProduct);
+        cart.addProduct(deoProduct, deoQuantity);
 
         const EXPECTED_CART_SET = new Set<Product>();
         EXPECTED_CART_SET.add(soapProduct);
         EXPECTED_CART_SET.add(deoProduct);
 
-        expect(cart.getCartItems).toEqual(EXPECTED_CART_SET);
-
+        expect(cart.getCartItems()).toEqual(EXPECTED_CART_SET);
 
     })
 

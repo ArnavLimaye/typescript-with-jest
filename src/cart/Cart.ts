@@ -11,7 +11,7 @@ class Cart {
     cartItems = new Set<Product>();
 
 
-    public addProduct(product: Product) {                          //quantity: number
+    public addProduct(product: Product, quantity: number) {                          
         this.name = product.getName();
         this.unitPrice = product.getUnitPrice();
         this.quantity += quantity;
