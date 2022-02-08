@@ -1,35 +1,62 @@
 import Product from "./Product";
+import ShoppingCartPriceCalculator from "./ShoppingCartPriceCalculator"
 
 
 class Cart {
     
-    private name : string;
-    private unitPrice : number;
-    private quantity = 0;
-    
-
-    cartItems = new Set<Product>();
-
+    private cartItemSet = new Set<Product>();
 
     public addProduct(product: Product, quantity: number) {                          
-        this.name = product.getName();
-        this.unitPrice = product.getUnitPrice();
-        this.quantity += quantity;
+   
+       let flag = false;
 
-        this.cartItems.add(product);
+        this.cartItemSet.forEach((items) => {
+
+            if(items.getName() === product.getName()) {
+                items.setNoOfProducts(quantity);
+                flag = true;
+            } 
+        })
+
+        if(flag === false)  {
+
+            product.setNoOfProducts(quantity);
+            this.cartItemSet.add(product);
+        }
     }
 
-    getTotalPriceOfCart(): string {
-        const totalPrice = (this.unitPrice * this.quantity).toFixed(2);
-        return totalPrice;
+    public getQuantity() : number {
+        let totalQuantity = 0;
+        this.getCartItemSet().forEach((product) => {
+        totalQuantity += product.getQuantity();
+    })
+    return totalQuantity;
     }
 
-    getQuantity(): number {
-        return this.quantity;
+
+    getTotalPriceWithoutTaxes(): number {
+        let shoppingCartPriceCalculator = new ShoppingCartPriceCalculator();
+        return shoppingCartPriceCalculator.calculateTotalPriceWithoutTaxes(this.getCartItemSet());
     }
 
-    getCartItems(): Set<Product> {
-        return this.cartItems;
+    getCartItemSet(): Set<Product> {
+        return this.cartItemSet;
+    }
+
+
+    public setSalesTaxMultiplier(salesTaxMultiplier : number) {
+        let shoppingCartPriceCalculator = new ShoppingCartPriceCalculator(); 
+        shoppingCartPriceCalculator.setSalesTaxMultiplier(salesTaxMultiplier);
+    }
+
+    calculateTotalSalesTax(){
+        let shoppingCartPriceCalculator = new ShoppingCartPriceCalculator();
+        return shoppingCartPriceCalculator.calculateTotalSalesTax(this.getCartItemSet());
+    }
+
+    calculateTotalPriceOfCartIncludingTaxes(){
+        let shoppingCartPriceCalculator = new ShoppingCartPriceCalculator();
+        return shoppingCartPriceCalculator.calculateTotalPriceOfCartIncludingTaxes(this.getCartItemSet());
     }
 
 }
